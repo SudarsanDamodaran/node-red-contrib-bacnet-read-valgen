@@ -1,0 +1,133 @@
+[
+    {
+        "id": "f9df5ea69c782ca5",
+        "type": "subflow",
+        "name": "BACnet Read",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "0a8e6763d9d97c85"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 640,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "f3b5d6598dcd3f03",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {
+            "module": "node-red-contrib-bacnet-read-valgen",
+            "type": "BACnet Read",
+            "version": "0.0.1",
+            "author": "sudarsan.damodaran@valgenesis.com",
+            "desc": "Node for Reading BACnet Values",
+            "keywords": "node-red,BACnetRead",
+            "license": "Apache-2.0"
+        },
+        "color": "#DDAA99"
+    },
+    {
+        "id": "0a8e6763d9d97c85",
+        "type": "BACnet-Read",
+        "z": "f9df5ea69c782ca5",
+        "name": "Weighing",
+        "objectType": "ANALOG_INPUT",
+        "instance": "64a45cff67c60888",
+        "propertyId": "85",
+        "device": "41167a7643735ba4",
+        "server": "974939f7e07b46bb",
+        "multipleRead": true,
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "ab74bb0478dfcac8"
+            ]
+        ]
+    },
+    {
+        "id": "ab74bb0478dfcac8",
+        "type": "json",
+        "z": "f9df5ea69c782ca5",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 350,
+        "y": 80,
+        "wires": [
+            [
+                "f3b5d6598dcd3f03"
+            ]
+        ]
+    },
+    {
+        "id": "f3b5d6598dcd3f03",
+        "type": "function",
+        "z": "f9df5ea69c782ca5",
+        "name": "function 4",
+        "func": "var data =  msg.payload;\nvar dataobj = JSON.parse(data);\nmsg.payload = dataobj.values[0].values[0].value[0].value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "64a45cff67c60888",
+        "type": "BACnet-Instance",
+        "name": "Weight",
+        "instanceAddress": "1"
+    },
+    {
+        "id": "41167a7643735ba4",
+        "type": "BACnet-Device",
+        "z": "0d39df0beb334ba1",
+        "name": "BACnet",
+        "deviceAddress": "192.168.9.137:47809"
+    },
+    {
+        "id": "974939f7e07b46bb",
+        "type": "BACnet-Client",
+        "z": "0d39df0beb334ba1",
+        "name": "BACnet Sim",
+        "adpuTimeout": "6000",
+        "port": "47808",
+        "interface": "192.168.9.137",
+        "broadcastAddress": "192.168.9.255"
+    },
+    {
+        "id": "b21076ad834e266e",
+        "type": "subflow:f9df5ea69c782ca5",
+        "z": "0d39df0beb334ba1",
+        "name": "BACnet Read",
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "f37f37928f16877f",
+                "4dd44cd18f702601",
+                "6fe26f1c34176645"
+            ]
+        ]
+    }
+]
